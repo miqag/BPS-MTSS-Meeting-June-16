@@ -1,0 +1,1590 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MTSS Steering Committee Meeting - 06.16.26</title>
+  <style>
+    :root {
+      --ink: #111111;
+      --paper: #ffffff;
+      --cream: #fbfaf6;
+      --mist: #e8f1e4;
+      --teal: #008ba7;
+      --navy: #083a5b;
+      --gold: #ffe47a;
+      --coral: #c94e3f;
+      --line: #d9ded8;
+      --muted: #5d6670;
+      --shadow: 0 22px 70px rgba(20, 25, 28, 0.12);
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--cream);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.45;
+    }
+
+    button,
+    textarea,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .progress {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 50;
+      height: 5px;
+      background: linear-gradient(90deg, var(--teal), var(--gold), var(--coral));
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      border-bottom: 1px solid rgba(17, 17, 17, 0.1);
+      background: rgba(251, 250, 246, 0.92);
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar-inner {
+      width: min(var(--max), calc(100% - 32px));
+      min-height: 68px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      font-weight: 900;
+    }
+
+    .mark {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 54% 34%, #8ed9e8 0 17%, transparent 18%),
+        conic-gradient(from 210deg, #ffffff 0 16%, transparent 17% 100%),
+        var(--teal);
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+    }
+
+    .brand span:last-child {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      min-height: 38px;
+      border: 1px solid var(--ink);
+      border-radius: 7px;
+      padding: 8px 12px;
+      background: var(--ink);
+      color: white;
+      font-weight: 800;
+    }
+
+    .button.secondary {
+      border-color: var(--line);
+      background: white;
+      color: var(--ink);
+    }
+
+    .hero {
+      min-height: calc(100vh - 68px);
+      display: grid;
+      align-items: stretch;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, var(--mist) 0 36%, transparent 36%),
+        linear-gradient(180deg, white 0%, var(--cream) 100%);
+    }
+
+    .hero-inner {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 78px 0 46px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      gap: 54px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--navy);
+      font-size: 0.88rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 24px;
+      max-width: 760px;
+      font-size: clamp(3.5rem, 8.8vw, 8.6rem);
+      line-height: 0.92;
+      letter-spacing: 0;
+    }
+
+    .lede {
+      max-width: 700px;
+      margin-bottom: 30px;
+      color: #30363d;
+      font-size: clamp(1.15rem, 2.1vw, 1.55rem);
+    }
+
+    .meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      padding: 10px 12px;
+      font-weight: 900;
+    }
+
+    .hero-panel {
+      align-self: stretch;
+      display: grid;
+      align-content: center;
+      gap: 18px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-panel h2 {
+      margin: 0;
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      line-height: 1;
+    }
+
+    .mini-agenda {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .mini-agenda li {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 10px;
+      align-items: center;
+      min-height: 46px;
+      border-top: 1px solid var(--line);
+      font-weight: 800;
+    }
+
+    .mini-agenda strong {
+      color: var(--teal);
+    }
+
+    .layout {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 282px minmax(0, 1fr);
+      gap: 36px;
+      padding: 36px 0 78px;
+    }
+
+    .rail {
+      position: sticky;
+      top: 92px;
+      align-self: start;
+      display: grid;
+      gap: 14px;
+    }
+
+    .nav-card,
+    .timer-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      overflow: hidden;
+    }
+
+    .nav-card h2,
+    .timer-card h2 {
+      margin: 0;
+      padding: 15px 16px;
+      border-bottom: 1px solid var(--line);
+      background: #f4f7f2;
+      font-size: 1.05rem;
+    }
+
+    .nav-card a {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--line);
+      color: #263039;
+      font-size: 0.95rem;
+    }
+
+    .nav-card a:last-child {
+      border-bottom: 0;
+    }
+
+    .nav-card a.is-active {
+      background: #e9f6f7;
+      color: var(--navy);
+      font-weight: 900;
+    }
+
+    .nav-card strong {
+      color: var(--teal);
+    }
+
+    .timer-card {
+      padding-bottom: 14px;
+    }
+
+    .timer-face {
+      padding: 16px;
+      font-size: 2.4rem;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .timer-controls {
+      display: flex;
+      gap: 8px;
+      padding: 0 16px;
+    }
+
+    .timer-controls .button {
+      flex: 1;
+    }
+
+    .content {
+      display: grid;
+      gap: 28px;
+    }
+
+    .section {
+      min-height: 70vh;
+      scroll-margin-top: 94px;
+      display: grid;
+      align-content: center;
+      gap: 22px;
+      border-top: 6px solid var(--ink);
+      padding: 38px 0 16px;
+    }
+
+    .section.teal { border-color: var(--teal); }
+    .section.gold { border-color: var(--gold); }
+    .section.coral { border-color: var(--coral); }
+    .section.navy { border-color: var(--navy); }
+
+    .section-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: clamp(2.35rem, 5vw, 5.1rem);
+      line-height: 0.96;
+      letter-spacing: 0;
+    }
+
+    .duration {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      padding: 8px 11px;
+      color: var(--navy);
+      font-weight: 900;
+    }
+
+    .cards {
+      display: grid;
+      gap: 16px;
+    }
+
+    .two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card {
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      padding: 18px;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+      font-size: 1.05rem;
+    }
+
+    .card p,
+    .card li {
+      color: #303842;
+    }
+
+    .vision {
+      padding: clamp(22px, 4vw, 38px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      box-shadow: var(--shadow);
+      font-size: clamp(1.45rem, 3vw, 2.6rem);
+      line-height: 1.34;
+    }
+
+    .vision strong {
+      font-weight: 900;
+    }
+
+    .prompt-list {
+      margin: 0;
+      padding-left: 1.1rem;
+    }
+
+    .prompt-list li + li {
+      margin-top: 10px;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .checklist label {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 10px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fff;
+      font-weight: 800;
+    }
+
+    .checklist input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--teal);
+      margin-top: 2px;
+    }
+
+    .tracker-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: end;
+    }
+
+    .tracker-intro p {
+      margin-bottom: 0;
+      color: #303842;
+      font-size: 1.05rem;
+    }
+
+    .legend {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .legend span {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      padding: 7px 9px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .tracker-wrap {
+      max-width: 100%;
+      overflow-x: auto;
+      border: 1px solid var(--ink);
+      border-radius: 8px;
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .tracker-table {
+      width: 100%;
+      min-width: 1180px;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    .tracker-table th,
+    .tracker-table td {
+      border: 1px solid #dde1dc;
+      padding: 9px 10px;
+      vertical-align: middle;
+    }
+
+    .tracker-table thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: #f8faf6;
+      color: var(--ink);
+      font-size: 0.86rem;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    .tracker-table th:first-child {
+      text-align: left;
+    }
+
+    .group-cell {
+      width: 92px;
+      min-width: 92px;
+      border-right: 3px solid var(--ink) !important;
+      border-top: 3px solid var(--ink) !important;
+      background: #fbfaf6;
+      color: var(--ink);
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .group-cell span {
+      display: inline-block;
+      max-width: 82px;
+      transform: rotate(-42deg);
+      line-height: 1.08;
+    }
+
+    .group-start td,
+    .group-start th {
+      border-top: 3px solid var(--ink);
+    }
+
+    .deliverable {
+      width: 47%;
+      min-width: 420px;
+      font-size: 0.96rem;
+      line-height: 1.26;
+    }
+
+    .deliverable strong {
+      font-weight: 900;
+    }
+
+    .deliverable-note {
+      display: block;
+      margin-top: 4px;
+      color: var(--teal);
+      font-size: 0.86rem;
+      font-weight: 900;
+    }
+
+    .status-cell {
+      width: 86px;
+      min-width: 86px;
+      padding: 4px !important;
+      text-align: center;
+    }
+
+    .status-cell label {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 38px;
+      border-radius: 7px;
+      color: transparent;
+      font-weight: 900;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .status-cell input {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .status-cell span {
+      pointer-events: none;
+    }
+
+    .status-cell input:checked + span {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--teal);
+      color: white;
+      box-shadow: inset 0 0 0 2px white;
+    }
+
+    .status-cell input:focus-visible + span {
+      outline: 3px solid rgba(0, 139, 167, 0.3);
+      outline-offset: 2px;
+    }
+
+    .status-cell label:hover {
+      background: #eef8f8;
+    }
+
+    .tracker-notes {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .decision-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+    }
+
+    .decision-table th,
+    .decision-table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .decision-table th {
+      background: #f4f7f2;
+      font-size: 0.9rem;
+    }
+
+    .decision-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .input-line {
+      width: 100%;
+      min-height: 34px;
+      border: 0;
+      border-bottom: 1px solid #9da6ac;
+      outline: 0;
+      background: transparent;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 156px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 13px;
+      outline-color: var(--teal);
+      background: #fff;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: white;
+      overflow: hidden;
+    }
+
+    summary {
+      padding: 14px 16px;
+      font-weight: 900;
+      cursor: pointer;
+      list-style-position: inside;
+    }
+
+    details > div {
+      padding: 0 16px 16px;
+      color: #303842;
+    }
+
+    .callout {
+      border-left: 7px solid var(--gold);
+      border-radius: 0 8px 8px 0;
+      background: #fff6c5;
+      padding: 18px 20px;
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      font-weight: 800;
+    }
+
+    .stacked-actions {
+      display: grid;
+      gap: 12px;
+    }
+
+    .footer {
+      margin-top: 26px;
+      padding: 32px 0;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      color: var(--muted);
+      flex-wrap: wrap;
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 60;
+      max-width: min(360px, calc(100% - 36px));
+      border-radius: 8px;
+      background: var(--ink);
+      color: white;
+      padding: 12px 14px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      font-weight: 800;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 960px) {
+      .hero {
+        min-height: auto;
+        background:
+          linear-gradient(180deg, var(--mist) 0 50%, transparent 50%),
+          linear-gradient(180deg, white 0%, var(--cream) 100%);
+      }
+
+      .hero-inner,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .rail {
+        position: static;
+      }
+
+      .timer-card {
+        display: none;
+      }
+
+      .two,
+      .three,
+      .tracker-intro,
+      .tracker-notes {
+        grid-template-columns: 1fr;
+      }
+
+      .legend {
+        justify-content: flex-start;
+      }
+
+      .section {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .topbar-inner,
+      .section-head,
+      .footer {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .actions,
+      .timer-controls {
+        justify-content: stretch;
+      }
+
+      .button {
+        flex: 1;
+      }
+
+      h1 {
+        font-size: clamp(3.15rem, 16vw, 4.6rem);
+      }
+
+      .hero-inner {
+        padding-top: 46px;
+      }
+
+      .decision-table,
+      .decision-table thead,
+      .decision-table tbody,
+      .decision-table th,
+      .decision-table td,
+      .decision-table tr {
+        display: block;
+      }
+
+      .decision-table thead {
+        display: none;
+      }
+
+      .decision-table tr {
+        padding: 8px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .decision-table td {
+        border-bottom: 0;
+      }
+
+      .decision-table td::before {
+        content: attr(data-label);
+        display: block;
+        margin-bottom: 4px;
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 900;
+      }
+    }
+
+    @media print {
+      .progress,
+      .topbar,
+      .rail,
+      .toast {
+        display: none !important;
+      }
+
+      body,
+      .hero {
+        background: white;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .hero-inner,
+      .layout {
+        width: 100%;
+        display: block;
+        padding: 0;
+      }
+
+      .hero-panel {
+        box-shadow: none;
+      }
+
+      .section {
+        min-height: auto;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      textarea {
+        min-height: 110px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" aria-label="MTSS Steering Committee">
+        <span class="mark" aria-hidden="true"></span>
+        <span>MTSS Steering Committee</span>
+      </a>
+      <div class="actions">
+        <button class="button secondary" type="button" data-action="copy">Copy Notes</button>
+        <button class="button secondary" type="button" data-action="clear">Clear</button>
+        <button class="button" type="button" data-action="print">Print</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-label="Meeting title">
+      <div class="hero-inner">
+        <div>
+          <p class="eyebrow">Barnstable Public Schools + TNTP</p>
+          <h1>MTSS Steering Committee</h1>
+          <p class="lede">A focused working session to decide what can be piloted in the fall, name the summer work that will make those pilots possible, and gather feedback for next year's MTSS guide.</p>
+          <div class="meta">
+            <span class="pill">June 16, 2026</span>
+            <span class="pill">PK-12 support system</span>
+            <span class="pill">Fall pilot planning</span>
+          </div>
+        </div>
+        <aside class="hero-panel" aria-label="Meeting flow">
+          <h2>Today's Flow</h2>
+          <ol class="mini-agenda">
+            <li><strong>01</strong><span>Reconnect to the shared vision</span></li>
+            <li><strong>02</strong><span>Check working group deliverables</span></li>
+            <li><strong>03</strong><span>Choose fall pilot candidates</span></li>
+            <li><strong>04</strong><span>Name summer support needs</span></li>
+            <li><strong>05</strong><span>Leave with clear next steps</span></li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="rail">
+        <nav class="nav-card" aria-label="Meeting sections">
+          <h2>Sections</h2>
+          <a href="#welcome"><strong>01</strong><span>Welcome</span></a>
+          <a href="#vision"><strong>02</strong><span>Vision</span></a>
+          <a href="#check-in"><strong>03</strong><span>Working groups</span></a>
+          <a href="#pilots"><strong>04</strong><span>Fall pilots</span></a>
+          <a href="#summer"><strong>05</strong><span>Summer work</span></a>
+          <a href="#feedback"><strong>06</strong><span>Feedback</span></a>
+          <a href="#drafts"><strong>07</strong><span>Drafts</span></a>
+          <a href="#close"><strong>08</strong><span>Close</span></a>
+        </nav>
+
+        <div class="timer-card" aria-label="Timer">
+          <h2>Timer</h2>
+          <div class="timer-face" data-timer>05:00</div>
+          <div class="timer-controls">
+            <button class="button secondary" type="button" data-action="timer-start">Start</button>
+            <button class="button secondary" type="button" data-action="timer-reset">Reset</button>
+          </div>
+        </div>
+      </aside>
+
+      <div class="content">
+        <section id="welcome" class="section navy" data-minutes="5">
+          <div class="section-head">
+            <h2>Welcome</h2>
+            <div class="duration">5 min</div>
+          </div>
+          <div class="cards two">
+            <article class="card">
+              <h3>Purpose</h3>
+              <p>Use today's time to turn working group progress into concrete fall pilot decisions and summer next steps.</p>
+            </article>
+            <article class="card">
+              <h3>Outcomes</h3>
+              <ul class="prompt-list">
+                <li>Shared understanding of current deliverables.</li>
+                <li>Clear fall pilot candidates.</li>
+                <li>Specific summer support requests.</li>
+                <li>Next steps for the base-layer MTSS manual.</li>
+              </ul>
+            </article>
+          </div>
+          <ul class="checklist">
+            <li><label><input type="checkbox" data-note="check-welcome"><span>Welcome and purpose are clear.</span></label></li>
+            <li><label><input type="checkbox" data-note="check-outcomes"><span>Outcomes for the meeting are confirmed.</span></label></li>
+          </ul>
+        </section>
+
+        <section id="vision" class="section teal" data-minutes="5">
+          <div class="section-head">
+            <h2>Our Vision</h2>
+            <div class="duration">5 min</div>
+          </div>
+          <div class="vision">
+            We are committed to a <strong>PK-12</strong> district where our <strong>integrated system of comprehensive support</strong> consistently facilitates the early identification of student needs. This approach, <strong>guided by ongoing data analysis</strong>, provides targeted interventions that accelerate progress and cultivate a culture of continuous improvement for every child.
+          </div>
+          <details>
+            <summary>Conversation prompts</summary>
+            <div>
+              <ul class="prompt-list">
+                <li>Where does this vision already feel visible in our work?</li>
+                <li>Where does the system still feel fragmented?</li>
+                <li>What should every fall pilot help us learn about this vision?</li>
+              </ul>
+            </div>
+          </details>
+        </section>
+
+        <section id="check-in" class="section" data-minutes="20">
+          <div class="section-head">
+            <h2>Working Group Check-in</h2>
+            <div class="duration">20 min</div>
+          </div>
+
+          <div class="tracker-intro">
+            <p>Use the tracker to quickly update each deliverable's current status. Select a cell to mark progress; changes save automatically in this browser.</p>
+            <div class="legend" aria-label="Tracker legend">
+              <span>X = current status</span>
+              <span>Blank = not discussed</span>
+            </div>
+          </div>
+
+          <div class="tracker-wrap" role="region" aria-label="Working group deliverables status tracker" tabindex="0">
+            <table class="tracker-table">
+              <thead>
+                <tr>
+                  <th scope="col">Working Group</th>
+                  <th scope="col">Deliverable</th>
+                  <th scope="col">Not started</th>
+                  <th scope="col">Stuck</th>
+                  <th scope="col">In Progress</th>
+                  <th scope="col">Proposal Submitted</th>
+                  <th scope="col">Socialized with Stakeholders</th>
+                  <th scope="col">Final</th>
+                  <th scope="col">In Final Procedures Manual</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="group-start">
+                  <th class="group-cell" scope="rowgroup" rowspan="5"><span>Data &amp; Assessment</span></th>
+                  <td class="deliverable"><strong>Comprehensive Assessment Inventory:</strong> A complete list of all assessments used/proposed, including their purpose, frequency, and target population.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-1" data-note="wg-data-1" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-1" data-note="wg-data-1" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-1" data-note="wg-data-1" value="In Progress" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-1" data-note="wg-data-1" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-1" data-note="wg-data-1" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-1" data-note="wg-data-1" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-1" data-note="wg-data-1" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Data Collection &amp; Storage Protocol:</strong> A documented set of procedures for collecting, inputting, and storing all relevant MTSS data.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-2" data-note="wg-data-2" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-2" data-note="wg-data-2" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-2" data-note="wg-data-2" value="In Progress" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-2" data-note="wg-data-2" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-2" data-note="wg-data-2" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-2" data-note="wg-data-2" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-2" data-note="wg-data-2" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Data Analysis &amp; Interpretation Toolkit:</strong> Resources, templates, and guidelines for staff to effectively analyze and interpret assessment data.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-3" data-note="wg-data-3" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-3" data-note="wg-data-3" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-3" data-note="wg-data-3" value="In Progress" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-3" data-note="wg-data-3" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-3" data-note="wg-data-3" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-3" data-note="wg-data-3" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-3" data-note="wg-data-3" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>MTSS Data Dashboard Requirements:</strong> A detailed outline of the essential data points and functionalities needed for an effective MTSS data dashboard.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-4" data-note="wg-data-4" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-4" data-note="wg-data-4" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-4" data-note="wg-data-4" value="In Progress"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-4" data-note="wg-data-4" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-4" data-note="wg-data-4" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-4" data-note="wg-data-4" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-4" data-note="wg-data-4" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Recommendations for Professional Development:</strong> A list of professional development topics related to assessment and data use in MTSS.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-5" data-note="wg-data-5" value="Not started" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-5" data-note="wg-data-5" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-5" data-note="wg-data-5" value="In Progress"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-5" data-note="wg-data-5" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-5" data-note="wg-data-5" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-5" data-note="wg-data-5" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-data-5" data-note="wg-data-5" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+
+                <tr class="group-start">
+                  <th class="group-cell" scope="rowgroup" rowspan="7"><span>K-2 Literacy</span></th>
+                  <td class="deliverable"><strong>Early Literacy Intervention Catalog:</strong> A comprehensive catalog of approved, evidence-based interventions specifically for early literacy, detailed by tier.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-1" data-note="wg-lit-1" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-1" data-note="wg-lit-1" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-1" data-note="wg-lit-1" value="In Progress"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-1" data-note="wg-lit-1" value="Proposal Submitted" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-1" data-note="wg-lit-1" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-1" data-note="wg-lit-1" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-1" data-note="wg-lit-1" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Catalog current practices:</strong> Create a list of current practices and resources.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-2" data-note="wg-lit-2" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-2" data-note="wg-lit-2" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-2" data-note="wg-lit-2" value="In Progress"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-2" data-note="wg-lit-2" value="Proposal Submitted" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-2" data-note="wg-lit-2" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-2" data-note="wg-lit-2" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-2" data-note="wg-lit-2" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Core Resource as Primary:</strong> Vet your current HQIM as a primary intervention resource.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-3" data-note="wg-lit-3" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-3" data-note="wg-lit-3" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-3" data-note="wg-lit-3" value="In Progress"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-3" data-note="wg-lit-3" value="Proposal Submitted" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-3" data-note="wg-lit-3" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-3" data-note="wg-lit-3" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-3" data-note="wg-lit-3" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Early Literacy Intervention Implementation Protocols:</strong> Detailed, user-friendly protocols for each early literacy intervention.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-4" data-note="wg-lit-4" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-4" data-note="wg-lit-4" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-4" data-note="wg-lit-4" value="In Progress"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-4" data-note="wg-lit-4" value="Proposal Submitted" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-4" data-note="wg-lit-4" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-4" data-note="wg-lit-4" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-4" data-note="wg-lit-4" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Early Literacy Progress Monitoring Plans:</strong> For each early literacy intervention, a clear plan outlining the specific progress monitoring tools, frequency, and decision-making rules.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-5" data-note="wg-lit-5" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-5" data-note="wg-lit-5" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-5" data-note="wg-lit-5" value="In Progress"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-5" data-note="wg-lit-5" value="Proposal Submitted" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-5" data-note="wg-lit-5" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-5" data-note="wg-lit-5" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-5" data-note="wg-lit-5" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Fidelity Checklists/Tools for Early Literacy Interventions:</strong> Resources for monitoring the fidelity of early literacy intervention implementation.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-6" data-note="wg-lit-6" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-6" data-note="wg-lit-6" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-6" data-note="wg-lit-6" value="In Progress"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-6" data-note="wg-lit-6" value="Proposal Submitted" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-6" data-note="wg-lit-6" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-6" data-note="wg-lit-6" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-6" data-note="wg-lit-6" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Entry/Exit Criteria for Early Literacy Interventions:</strong> Clearly defined, data-driven criteria for student movement into and out of early literacy interventions.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-7" data-note="wg-lit-7" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-7" data-note="wg-lit-7" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-7" data-note="wg-lit-7" value="In Progress"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-7" data-note="wg-lit-7" value="Proposal Submitted" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-7" data-note="wg-lit-7" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-7" data-note="wg-lit-7" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-lit-7" data-note="wg-lit-7" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+
+                <tr class="group-start">
+                  <th class="group-cell" scope="rowgroup" rowspan="5"><span>SEL Interventions</span></th>
+                  <td class="deliverable"><strong>SEL Intervention Catalog:</strong> A comprehensive catalog of approved, evidence-based interventions specifically for social-emotional learning, detailed by tier.<span class="deliverable-note">Working DRAFT</span></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-1" data-note="wg-sel-1" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-1" data-note="wg-sel-1" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-1" data-note="wg-sel-1" value="In Progress" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-1" data-note="wg-sel-1" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-1" data-note="wg-sel-1" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-1" data-note="wg-sel-1" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-1" data-note="wg-sel-1" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>SEL Intervention Implementation Protocols:</strong> Detailed, user-friendly protocols for each SEL intervention.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-2" data-note="wg-sel-2" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-2" data-note="wg-sel-2" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-2" data-note="wg-sel-2" value="In Progress" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-2" data-note="wg-sel-2" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-2" data-note="wg-sel-2" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-2" data-note="wg-sel-2" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-2" data-note="wg-sel-2" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>SEL Progress Monitoring Plans:</strong> For each SEL intervention, a clear plan outlining the specific progress monitoring tools, frequency, and decision-making rules.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-3" data-note="wg-sel-3" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-3" data-note="wg-sel-3" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-3" data-note="wg-sel-3" value="In Progress" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-3" data-note="wg-sel-3" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-3" data-note="wg-sel-3" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-3" data-note="wg-sel-3" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-3" data-note="wg-sel-3" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Fidelity Checklists/Tools for SEL Interventions:</strong> Resources for monitoring the fidelity of SEL intervention implementation.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-4" data-note="wg-sel-4" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-4" data-note="wg-sel-4" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-4" data-note="wg-sel-4" value="In Progress" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-4" data-note="wg-sel-4" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-4" data-note="wg-sel-4" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-4" data-note="wg-sel-4" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-4" data-note="wg-sel-4" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Entry/Exit Criteria for SEL Interventions:</strong> Clearly defined, data-driven criteria for student movement into and out of SEL interventions.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-5" data-note="wg-sel-5" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-5" data-note="wg-sel-5" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-5" data-note="wg-sel-5" value="In Progress" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-5" data-note="wg-sel-5" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-5" data-note="wg-sel-5" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-5" data-note="wg-sel-5" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-sel-5" data-note="wg-sel-5" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+
+                <tr class="group-start">
+                  <th class="group-cell" scope="rowgroup" rowspan="4"><span>ML Supports</span></th>
+                  <td class="deliverable"><strong>Tier 1 Instructional Strategies for MLs Guide:</strong> A practical resource for general education teachers outlining effective strategies for supporting MLs in the core classroom, K-5.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-1" data-note="wg-ml-1" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-1" data-note="wg-ml-1" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-1" data-note="wg-ml-1" value="In Progress" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-1" data-note="wg-ml-1" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-1" data-note="wg-ml-1" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-1" data-note="wg-ml-1" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-1" data-note="wg-ml-1" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>ML Progress Monitoring Tools/Guidelines for Tier 1 &amp; 2:</strong> Recommendations for specific tools and protocols for tracking ML academic and language growth.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-2" data-note="wg-ml-2" value="Not started" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-2" data-note="wg-ml-2" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-2" data-note="wg-ml-2" value="In Progress"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-2" data-note="wg-ml-2" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-2" data-note="wg-ml-2" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-2" data-note="wg-ml-2" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-2" data-note="wg-ml-2" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Professional Development Plan for Tier 1 &amp; 2 ML Support:</strong> Specific training recommendations for staff on universal and targeted strategies for MLs.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-3" data-note="wg-ml-3" value="Not started" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-3" data-note="wg-ml-3" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-3" data-note="wg-ml-3" value="In Progress"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-3" data-note="wg-ml-3" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-3" data-note="wg-ml-3" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-3" data-note="wg-ml-3" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-3" data-note="wg-ml-3" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Collaboration Protocols:</strong> Guidelines for effective communication and co-planning among staff supporting MLs.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-4" data-note="wg-ml-4" value="Not started" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-4" data-note="wg-ml-4" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-4" data-note="wg-ml-4" value="In Progress"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-4" data-note="wg-ml-4" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-4" data-note="wg-ml-4" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-4" data-note="wg-ml-4" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-ml-4" data-note="wg-ml-4" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+
+                <tr class="group-start">
+                  <th class="group-cell" scope="rowgroup" rowspan="5"><span>School-based MTSS</span></th>
+                  <td class="deliverable"><strong>School-based MTSS Team Handbook/Manual:</strong> A comprehensive guide outlining team composition, roles, responsibilities, meeting protocols, and workflow.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-1" data-note="wg-school-1" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-1" data-note="wg-school-1" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-1" data-note="wg-school-1" value="In Progress" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-1" data-note="wg-school-1" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-1" data-note="wg-school-1" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-1" data-note="wg-school-1" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-1" data-note="wg-school-1" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Data Review &amp; Decision-Making Flowchart/Protocol:</strong> A visual or written guide for how school teams will use data to make MTSS decisions.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-2" data-note="wg-school-2" value="Not started"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-2" data-note="wg-school-2" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-2" data-note="wg-school-2" value="In Progress" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-2" data-note="wg-school-2" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-2" data-note="wg-school-2" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-2" data-note="wg-school-2" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-2" data-note="wg-school-2" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Sample Meeting Agendas &amp; Minutes Templates:</strong> Tools to facilitate efficient and effective school-based MTSS meetings.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-3" data-note="wg-school-3" value="Not started" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-3" data-note="wg-school-3" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-3" data-note="wg-school-3" value="In Progress"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-3" data-note="wg-school-3" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-3" data-note="wg-school-3" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-3" data-note="wg-school-3" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-3" data-note="wg-school-3" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Parent Communication Templates/Guidelines:</strong> Resources for school teams to effectively communicate with families about MTSS.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-4" data-note="wg-school-4" value="Not started" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-4" data-note="wg-school-4" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-4" data-note="wg-school-4" value="In Progress"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-4" data-note="wg-school-4" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-4" data-note="wg-school-4" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-4" data-note="wg-school-4" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-4" data-note="wg-school-4" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+                <tr>
+                  <td class="deliverable"><strong>Recommendations for School-Based MTSS Team Training:</strong> Specific professional development needs for school-level staff involved in MTSS teams.</td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-5" data-note="wg-school-5" value="Not started" checked><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-5" data-note="wg-school-5" value="Stuck"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-5" data-note="wg-school-5" value="In Progress"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-5" data-note="wg-school-5" value="Proposal Submitted"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-5" data-note="wg-school-5" value="Socialized with Stakeholders"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-5" data-note="wg-school-5" value="Final"><span>X</span></label></td>
+                  <td class="status-cell"><label><input type="radio" name="wg-school-5" data-note="wg-school-5" value="In Final Procedures Manual"><span>X</span></label></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tracker-notes">
+            <article class="card">
+              <h3>What Changed?</h3>
+              <p>Capture quick updates, blockers, or decisions that should travel with the tracker.</p>
+              <textarea data-note="working-group-updates" aria-label="Working group update notes"></textarea>
+            </article>
+            <article class="card">
+              <h3>Follow-up Needed</h3>
+              <p>Name owners, support needs, or questions to resolve before fall pilot planning.</p>
+              <textarea data-note="working-group-follow-up" aria-label="Working group follow-up notes"></textarea>
+            </article>
+          </div>
+        </section>
+
+        <section id="pilots" class="section gold" data-minutes="25">
+          <div class="section-head">
+            <h2>Fall Pilots</h2>
+            <div class="duration">25 min</div>
+          </div>
+          <div class="cards two">
+            <article class="card">
+              <h3>What Is Pilotable?</h3>
+              <ul class="prompt-list">
+                <li>Open architect/Aspen workflow?</li>
+                <li>Proposed early literacy interventions?</li>
+                <li>Other high-readiness resources or routines?</li>
+              </ul>
+            </article>
+            <article class="card">
+              <h3>What Must Happen This Summer?</h3>
+              <ul class="prompt-list">
+                <li>What needs to be clarified?</li>
+                <li>What needs to be built or revised?</li>
+                <li>Who needs to be involved before launch?</li>
+              </ul>
+            </article>
+          </div>
+
+          <table class="decision-table">
+            <thead>
+              <tr>
+                <th scope="col">Pilot candidate</th>
+                <th scope="col">Readiness</th>
+                <th scope="col">Summer action</th>
+                <th scope="col">Owner</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Pilot candidate"><input class="input-line" data-note="pilot-1-name" aria-label="Pilot 1 name"></td>
+                <td data-label="Readiness"><input class="input-line" data-note="pilot-1-status" aria-label="Pilot 1 readiness"></td>
+                <td data-label="Summer action"><input class="input-line" data-note="pilot-1-action" aria-label="Pilot 1 summer action"></td>
+                <td data-label="Owner"><input class="input-line" data-note="pilot-1-owner" aria-label="Pilot 1 owner"></td>
+              </tr>
+              <tr>
+                <td data-label="Pilot candidate"><input class="input-line" data-note="pilot-2-name" aria-label="Pilot 2 name"></td>
+                <td data-label="Readiness"><input class="input-line" data-note="pilot-2-status" aria-label="Pilot 2 readiness"></td>
+                <td data-label="Summer action"><input class="input-line" data-note="pilot-2-action" aria-label="Pilot 2 summer action"></td>
+                <td data-label="Owner"><input class="input-line" data-note="pilot-2-owner" aria-label="Pilot 2 owner"></td>
+              </tr>
+              <tr>
+                <td data-label="Pilot candidate"><input class="input-line" data-note="pilot-3-name" aria-label="Pilot 3 name"></td>
+                <td data-label="Readiness"><input class="input-line" data-note="pilot-3-status" aria-label="Pilot 3 readiness"></td>
+                <td data-label="Summer action"><input class="input-line" data-note="pilot-3-action" aria-label="Pilot 3 summer action"></td>
+                <td data-label="Owner"><input class="input-line" data-note="pilot-3-owner" aria-label="Pilot 3 owner"></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="summer" class="section coral" data-minutes="10">
+          <div class="section-head">
+            <h2>Working With Mickey</h2>
+            <div class="duration">10 min</div>
+          </div>
+          <div class="callout">
+            In the next two weeks, schedule time with Mickey to review next steps and begin folding team resources into the base-layer manual.
+          </div>
+          <div class="cards two">
+            <article class="card">
+              <h3>Meeting Topics</h3>
+              <textarea data-note="mickey-topics" aria-label="Mickey meeting topics"></textarea>
+            </article>
+            <article class="card">
+              <h3>Resources to Fold In</h3>
+              <textarea data-note="resources" aria-label="Resources for the base-layer manual"></textarea>
+            </article>
+          </div>
+        </section>
+
+        <section id="feedback" class="section gold" data-minutes="20">
+          <div class="section-head">
+            <h2>Team Feedback</h2>
+            <div class="duration">20 min</div>
+          </div>
+          <div class="cards two">
+            <article class="card">
+              <h3>Next Year</h3>
+              <p>In order to move the work forward next year, what ideas and thoughts do you have?</p>
+              <textarea data-note="next-year-ideas" aria-label="Next year ideas"></textarea>
+            </article>
+            <article class="card">
+              <h3>Summer Support</h3>
+              <p>What do you need this summer for support?</p>
+              <textarea data-note="summer-support" aria-label="Summer support needs"></textarea>
+            </article>
+          </div>
+          <details open>
+            <summary>Base-layer manual</summary>
+            <div>Mickey will continue building a coherent MTSS guide using the working group resources, pilot decisions, and feedback captured here.</div>
+          </details>
+        </section>
+
+        <section id="drafts" class="section teal" data-minutes="15">
+          <div class="section-head">
+            <h2>Two Drafts</h2>
+            <div class="duration">15 min</div>
+          </div>
+          <div class="cards two">
+            <article class="card">
+              <h3>Draft 1</h3>
+              <textarea data-note="draft-1" aria-label="Draft 1 notes"></textarea>
+            </article>
+            <article class="card">
+              <h3>Draft 2</h3>
+              <textarea data-note="draft-2" aria-label="Draft 2 notes"></textarea>
+            </article>
+          </div>
+          <article class="card">
+            <h3>Decisions From Draft Review</h3>
+            <textarea data-note="draft-decisions" aria-label="Draft review decisions"></textarea>
+          </article>
+        </section>
+
+        <section id="close" class="section navy" data-minutes="10">
+          <div class="section-head">
+            <h2>Questions</h2>
+            <div class="duration">10 min</div>
+          </div>
+          <div class="cards two">
+            <article class="card">
+              <h3>Open Questions</h3>
+              <textarea data-note="open-questions" aria-label="Open questions"></textarea>
+            </article>
+            <article class="card stacked-actions">
+              <h3>Before We Leave</h3>
+              <ul class="checklist">
+                <li><label><input type="checkbox" data-note="confirm-pilots"><span>Fall pilot candidates are confirmed.</span></label></li>
+                <li><label><input type="checkbox" data-note="confirm-mickey"><span>Summer meetings with Mickey are identified.</span></label></li>
+                <li><label><input type="checkbox" data-note="confirm-manual"><span>Manual inputs and owners are clear.</span></label></li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <footer class="footer">
+          <strong>Thank you.</strong>
+          <span>MTSS Steering Committee - June 16, 2026</span>
+        </footer>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" role="status" aria-live="polite" data-toast></div>
+
+  <script>
+    const fields = [...document.querySelectorAll('[data-note]')];
+    const progress = document.querySelector('.progress');
+    const navLinks = [...document.querySelectorAll('.nav-card a')];
+    const sections = [...document.querySelectorAll('.section')];
+    const timerFace = document.querySelector('[data-timer]');
+    const toast = document.querySelector('[data-toast]');
+    let timerSeconds = 5 * 60;
+    let timerInitial = timerSeconds;
+    let timerId = null;
+
+    function keyFor(field) {
+      return `mtss-061626-${field.dataset.note}`;
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      window.clearTimeout(showToast.hideId);
+      showToast.hideId = window.setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    function formatTime(seconds) {
+      const safe = Math.max(0, seconds);
+      const mins = String(Math.floor(safe / 60)).padStart(2, '0');
+      const secs = String(safe % 60).padStart(2, '0');
+      return `${mins}:${secs}`;
+    }
+
+    function setTimer(minutes) {
+      timerInitial = Number(minutes || 5) * 60;
+      timerSeconds = timerInitial;
+      timerFace.textContent = formatTime(timerSeconds);
+    }
+
+    function activeSection() {
+      const marker = window.scrollY + window.innerHeight * 0.34;
+      return sections.findLast((section) => section.offsetTop <= marker) || sections[0];
+    }
+
+    function updateScrollState() {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const amount = max <= 0 ? 0 : window.scrollY / max;
+      progress.style.transform = `scaleX(${amount})`;
+
+      const current = activeSection();
+      navLinks.forEach((link) => {
+        link.classList.toggle('is-active', link.getAttribute('href') === `#${current.id}`);
+      });
+
+      if (!timerId) setTimer(current.dataset.minutes);
+    }
+
+    function groupLabelFor(row) {
+      let current = row;
+      while (current) {
+        const label = current.querySelector('.group-cell span');
+        if (label) return label.textContent.trim();
+        current = current.previousElementSibling;
+      }
+      return 'Working group';
+    }
+
+    fields.forEach((field) => {
+      const saved = localStorage.getItem(keyFor(field));
+      if (field.type === 'radio') {
+        if (saved !== null) field.checked = saved === field.value;
+        field.addEventListener('change', () => {
+          if (field.checked) localStorage.setItem(keyFor(field), field.value);
+        });
+      } else if (field.type === 'checkbox') {
+        field.checked = saved === 'true';
+        field.addEventListener('change', () => localStorage.setItem(keyFor(field), field.checked));
+      } else {
+        if (saved !== null) field.value = saved;
+        field.addEventListener('input', () => localStorage.setItem(keyFor(field), field.value));
+      }
+    });
+
+    document.querySelector('[data-action="print"]').addEventListener('click', () => window.print());
+
+    document.querySelector('[data-action="clear"]').addEventListener('click', () => {
+      const confirmed = window.confirm('Clear all saved notes and checks on this page?');
+      if (!confirmed) return;
+      fields.forEach((field) => {
+        if (field.type === 'radio') {
+          localStorage.setItem(keyFor(field), '');
+          field.checked = false;
+        } else if (field.type === 'checkbox') {
+          localStorage.removeItem(keyFor(field));
+          field.checked = false;
+        } else {
+          localStorage.removeItem(keyFor(field));
+          field.value = '';
+        }
+      });
+      showToast('Cleared.');
+    });
+
+    document.querySelector('[data-action="copy"]').addEventListener('click', async () => {
+      const lines = ['MTSS Steering Committee - June 16, 2026', ''];
+      const copiedRadioGroups = new Set();
+      fields.forEach((field) => {
+        if (field.type === 'radio') {
+          if (!field.checked || copiedRadioGroups.has(field.name)) return;
+          copiedRadioGroups.add(field.name);
+          const row = field.closest('tr');
+          const group = groupLabelFor(row);
+          const deliverable = row?.querySelector('.deliverable')?.textContent.replace(/\s+/g, ' ').trim() || field.name;
+          lines.push(`${group} - ${deliverable}: ${field.value}`);
+          return;
+        }
+        const label = field.closest('.card')?.querySelector('h3')?.textContent ||
+          field.closest('label')?.textContent.trim() ||
+          field.getAttribute('aria-label') ||
+          field.dataset.note;
+        const value = field.type === 'checkbox' ? (field.checked ? 'Yes' : '') : field.value.trim();
+        if (value) lines.push(`${label}: ${value}`);
+      });
+      try {
+        await navigator.clipboard.writeText(lines.join('\n'));
+        showToast('Notes copied.');
+      } catch {
+        showToast('Copy was not available in this browser.');
+      }
+    });
+
+    document.querySelector('[data-action="timer-start"]').addEventListener('click', (event) => {
+      if (timerId) {
+        window.clearInterval(timerId);
+        timerId = null;
+        event.currentTarget.textContent = 'Start';
+        return;
+      }
+      event.currentTarget.textContent = 'Pause';
+      timerId = window.setInterval(() => {
+        timerSeconds -= 1;
+        timerFace.textContent = formatTime(timerSeconds);
+        if (timerSeconds <= 0) {
+          window.clearInterval(timerId);
+          timerId = null;
+          event.currentTarget.textContent = 'Start';
+          showToast('Time.');
+        }
+      }, 1000);
+    });
+
+    document.querySelector('[data-action="timer-reset"]').addEventListener('click', () => {
+      timerSeconds = timerInitial;
+      timerFace.textContent = formatTime(timerSeconds);
+    });
+
+    document.addEventListener('scroll', updateScrollState, { passive: true });
+    window.addEventListener('resize', updateScrollState);
+    updateScrollState();
+  </script>
+</body>
+</html>
